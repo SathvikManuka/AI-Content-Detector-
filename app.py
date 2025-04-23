@@ -12,7 +12,7 @@ model = RobertaForSequenceClassification.from_pretrained("fine_tuned_roberta")
 tokenizer = RobertaTokenizer.from_pretrained("roberta-base")
 
 # Function to predict
-def predict_review(text):
+def predict_content(text):
     input_ids = tokenizer(text, return_tensors="pt", padding=True, truncation=True)["input_ids"]
     with torch.no_grad():
         output = model(input_ids)
@@ -29,7 +29,7 @@ def home():
 def predict():
     if request.method == 'POST':
         text = request.form['text']
-        prediction = predict_review(text)
+        prediction = predict_content(text)
         return render_template('results.html', prediction=prediction, text=text)
 
 if __name__ == '__main__':
